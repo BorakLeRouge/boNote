@@ -28,14 +28,11 @@ const boNote = function(context) {
             };
             webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
             webviewView.webview.onDidReceiveMessage(msg => {
-                if(msg.action == 'cmd') {
-                    vscode.commands.executeCommand(msg.valeur)
+                if(msg.action == '1er Affichage') {
+                    PreparationAffichage(context, webviewView.webview) ;
                 }
-                if(msg.action == 'mail') {
-                    vscode.env.openExternal('mailto:'+msg.valeur)
-                }
-                if(msg.action == 'url') {
-                    vscode.env.openExternal(msg.valeur)
+                if(msg.action == 'ouvrirFichier') {
+                    ouvrirFichier(context, webviewView.webview, msg.contenu) ;
                 }
             });
         }
@@ -56,6 +53,41 @@ const boNote = function(context) {
 
 module.exports = {
 	boNote
+}
+
+// =============================================================================================================
+//  PPPP   RRRR   EEEEE  PPPP     A    RRRR          A    FFFFF  FFFFF  III   CCC   H   H    A     GGG   EEEEE
+//  P   P  R   R  E      P   P   A A   R   R        A A   F      F       I   C   C  H   H   A A   G   G  E
+//  P   P  R   R  EEE    P   P  A   A  R   R       A   A  FFF    FFF     I   C      HHHHH  A   A  G      EEE
+//  PPPP   RRRR   E      PPPP   AAAAA  RRRR        AAAAA  F      F       I   C      H   H  AAAAA  G  GG  E
+//  P      R  R   E      P      A   A  R  R        A   A  F      F       I   C   C  H   H  A   A  G   G  E
+//  P      R   R  EEEEE  P      A   A  R   R       A   A  F      F      III   CCC   H   H  A   A   GGGG  EEEEE
+// =============================================================================================================
+// * * * preparation de l'affichage
+async function PreparationAffichage(context, webview) {
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    try {
+        contenuDossier = fs.readdirSync(path.join(leDossier)) ;
+        let html = '<ul>'
+        for(lignFich of contenuDossier) {
+            html += '<li class="ouvFic" onclick="ouvrirFichier(\''+lignFich+'\')">' + lignFich + '</li>'
+        }
+        html += '</ul>'
+        webview.postMessage({
+            action: 'affichage',
+            contenu: html
+        })
+    } catch(e) {
+        vscode.window.showErrorMessage("Dossier BoNote introuvable : " + e.toString() )
+        return
+    }
+}
+
+async function ouvrirFichier(context, webview, fichier) {
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    let leFich    = path.join(leDossier, fichier) ;
+    let uri = vscode.Uri.file(leFich) ;
+    vscode.commands.executeCommand('vscode.open', uri) ;
 }
 
 // * * * Fonction CLOG à regroupement * * *

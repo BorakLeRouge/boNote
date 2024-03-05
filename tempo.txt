@@ -1,0 +1,23 @@
+fs.readdirSync(path[, options])#
+
+History
+path <string> | <Buffer> | <URL>
+options <string> | <Object>
+encoding <string> Default: 'utf8'
+withFileTypes <boolean> Default: false
+recursive <boolean> If true, reads the contents of a directory recursively. In recursive mode, it will list all files, sub files, and directories. Default: false.
+Returns: <string[]> | <Buffer[]> | <fs.Dirent[]>
+Reads the contents of the directory.
+
+ 
+ 
+vscode.open - Opens the provided resource in the editor.
+
+Uri -
+
+
+vscode.window.showOpenDialog(options).then(fileUri => {
+    if (fileUri && fileUri[0]) {
+        console.log('Selected file: ' + fileUri[0].fsPath);
+    }
+});

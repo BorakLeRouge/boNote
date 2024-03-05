@@ -3,6 +3,8 @@
   "displayName": "boNote",
   "description": "Edition de Notes",
   "version": "0.0.1",
+  "publisher": "borakLeRouge",
+  "icon": "boNote.png",
   "engines": {
     "vscode": "^1.86.0"
   },
@@ -33,7 +35,17 @@
     "commands": [{
       "command": "bonote.choixDossier",
       "title": "choix du dosser de stockage des notes..."
-    }]
+    }],
+		"configuration": {
+			"title": "boNote",
+			"properties": {
+			  	"boNote.boNoteFolder": {
+					"type": "string",
+					"default": "/Users/mfay/Desktop/boNoteStockage",
+					"description": "Adresse du dossier de stockage des Notes."
+			  	}
+			}
+		}
   },
   "scripts": {
     "lint": "eslint .",

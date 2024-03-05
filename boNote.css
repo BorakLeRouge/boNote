@@ -1,0 +1,9 @@
+.ouvFic {
+    color: blue ;
+    cursor: pointer ;
+}
+.ouvFic:hover {
+    color: rgb(67, 67, 255) ;
+    text-decoration: underline ;
+    background-color: var(--vscode-list-hoverBackground) ;
+}
