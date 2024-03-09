@@ -2,11 +2,11 @@
   "name": "bonote",
   "displayName": "boNote",
   "description": "Edition de Notes",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "publisher": "borakLeRouge",
   "icon": "boNote.png",
   "engines": {
-    "vscode": "^1.86.0"
+    "vscode": "^1.72.0"
   },
   "categories": [
     "Other"
@@ -53,7 +53,7 @@
     "test": "node ./test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.86.0",
+    "@types/vscode": "^1.72.0",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",

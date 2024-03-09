@@ -34,6 +34,9 @@ const boNote = function(context) {
                 if(msg.action == 'ouvrirFichier') {
                     ouvrirFichier(context, webviewView.webview, msg.contenu) ;
                 }
+                if(msg.action == 'openFolder') {
+                    openFolder(context, webviewView.webview) ;
+                }
             });
         }
         _getHtmlForWebview(webview) {
@@ -68,9 +71,16 @@ async function PreparationAffichage(context, webview) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
     try {
         contenuDossier = fs.readdirSync(path.join(leDossier)) ;
-        let html = '<ul>'
+        let html = '<ul>' ;
+        let prec = '' ;
         for(lignFich of contenuDossier) {
-            html += '<li class="ouvFic" onclick="ouvrirFichier(\''+lignFich+'\')">' + lignFich + '</li>'
+            let deb = lignFich.substring(0,3) ;
+            if (prec != '' && deb != prec) {
+                html += '</ul><ul>' ; 
+            }
+            prec = deb ;
+            let dispName = lignFich.replace('.txt', '').replace('.text', '').replace('.md', '').replace('.css', '').replace('.html', '').replace('.js', '')
+            html += '<li><a class="link" href="javascript:void(0)" onclick="ouvrirFichier(\''+lignFich+'\')" title="'+lignFich+'">' + dispName + '</a></li>' ;
         }
         html += '</ul>'
         webview.postMessage({
@@ -88,6 +98,13 @@ async function ouvrirFichier(context, webview, fichier) {
     let leFich    = path.join(leDossier, fichier) ;
     let uri = vscode.Uri.file(leFich) ;
     vscode.commands.executeCommand('vscode.open', uri) ;
+}
+
+async function openFolder(context, webview) {
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    let leFich    = path.join(leDossier) ;
+    let uri = vscode.Uri.file(leFich) ;
+    vscode.commands.executeCommand('vscode.openFolder', uri, {forceNewWindow: true}) ;
 }
 
 // * * * Fonction CLOG à regroupement * * *

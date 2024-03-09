@@ -57,6 +57,12 @@ function ouvrirFichier(fich) {
         contenu: fich      
     })
 }
+// * * * Ouvrir Fichier
+function openFolder() {
+    vscode.postMessage({
+        action: 'openFolder'
+    })
+}
 // =============================
 //   CCC   L       OOO    GGG
 //  C   C  L      O   O  G   G

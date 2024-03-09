@@ -7,8 +7,6 @@ const vscode = require('vscode');
  */
 function activate(context) {
 
-	console.log('Congratulations, your extension "bonote" is now active!');
-
     const panelExt = require('./boNote.js') ;
     const provider   = panelExt.boNote(context) ;
     context.subscriptions.push(
