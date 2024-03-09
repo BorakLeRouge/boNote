@@ -63,6 +63,12 @@ function openFolder() {
         action: 'openFolder'
     })
 }
+// * * * Choisir le dossier de stockage 
+function choisirDossier() {
+    vscode.postMessage({
+        action: 'choisirDossier'
+    })
+}
 // =============================
 //   CCC   L       OOO    GGG
 //  C   C  L      O   O  G   G
