@@ -15,13 +15,13 @@ Cette application fait pour l'instant le minimum :
 
 Panel de choix du dossier :
 
-![Choix du dossier](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel 02.png)
+![Choix du dossier](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel02.png)
 
 Exemple d'affichage :
 
-![Exemple d'affichage](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel 01.png)
+![Exemple d'affichage](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel01.png)
 
 Explication :
 
-![Explication](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel 03.png)
+![Explication](https://raw.githubusercontent.com/BorakLeRouge/boNote/master/panel03.png)
 
