@@ -10,6 +10,7 @@
 
 const vscode = acquireVsCodeApi() ;
 
+
 // ====================================================================================================================
 //  M   M  EEEEE   SSS    SSS     A     GGG   EEEEE       RRRR   EEEEE   CCC   EEEEE  PPPP   TTTTT  III   OOO   N   N
 //  MM MM  E      S      S       A A   G   G  E           R   R  E      C   C  E      P   P    T     I   O   O  NN  N
@@ -29,6 +30,7 @@ window.addEventListener('message', event => {
 
 } )
 
+
 // ===============================================================================
 //   1   EEEEE  RRRR   EEEEE         A    RRRR   RRRR   III  V   V  EEEEE  EEEEE
 //  11   E      R   R  E            A A   R   R  R   R   I   V   V  E      E
@@ -42,14 +44,16 @@ vscode.postMessage({
     action:  '1er Affichage'
 }) ;
 
-// ===========================================================================================
-//   OOO   U   U  V   V  RRRR   III  RRRR        FFFFF  III   CCC   H   H  III  EEEEE  RRRR
-//  O   O  U   U  V   V  R   R   I   R   R       F       I   C   C  H   H   I   E      R   R
-//  O   O  U   U  V   V  R   R   I   R   R       FFF     I   C      HHHHH   I   EEE    R   R
-//  O   O  U   U   V V   RRRR    I   RRRR        F       I   C      H   H   I   E      RRRR
-//  O   O  U   U   V V   R  R    I   R  R        F       I   C   C  H   H   I   E      R  R
-//   OOO    UUU     V    R   R  III  R   R       F      III   CCC   H   H  III  EEEEE  R   R
-// ===========================================================================================
+
+// ================================================
+//    A     CCC   TTTTT  III   OOO   N   N   SSS
+//   A A   C   C    T     I   O   O  NN  N  S
+//  A   A  C        T     I   O   O  N N N   SSS
+//  AAAAA  C        T     I   O   O  N  NN      S
+//  A   A  C   C    T     I   O   O  N   N      S
+//  A   A   CCC     T    III   OOO   N   N  SSSS
+// ================================================ 
+
 // * * * Ouvrir Fichier
 function ouvrirFichier(fich) {
     vscode.postMessage({
@@ -57,10 +61,10 @@ function ouvrirFichier(fich) {
         contenu: fich      
     })
 }
-// * * * Ouvrir Fichier
-function openFolder() {
+// * * * Ouvrir Dossier
+function ouvrirDossier() {
     vscode.postMessage({
-        action: 'openFolder'
+        action: 'ouvrirDossier'
     })
 }
 // * * * Choisir le dossier de stockage 
@@ -69,15 +73,24 @@ function choisirDossier() {
         action: 'choisirDossier'
     })
 }
-// =============================
-//   CCC   L       OOO    GGG
-//  C   C  L      O   O  G   G
-//  C      L      O   O  G
-//  C      L      O   O  G  GG
-//  C   C  L      O   O  G   G
-//   CCC   LLLLL   OOO    GGGG
-// =============================
-// * * * clog
+
+// * * * Actualiser l'affichage
+function actualiser() {
+    document.getElementById('contenu').innerHTML = '<p>Actualisation !</p>' ;
+    vscode.postMessage({
+        action: 'actualiser'
+    })
+}
+
+// =======================================================
+//  RRRR    OOO   U   U  TTTTT  III  N   N  EEEEE   SSS
+//  R   R  O   O  U   U    T     I   NN  N  E      S
+//  R   R  O   O  U   U    T     I   N N N  EEE     SSS
+//  RRRR   O   O  U   U    T     I   N  NN  E          S
+//  R  R   O   O  U   U    T     I   N   N  E          S
+//  R   R   OOO    UUU     T    III  N   N  EEEEE  SSSS
+// =======================================================
+// * * * Routines
 function clog(...tb) {
     if(tb.length == 1) {
         console.log(tb[0]);

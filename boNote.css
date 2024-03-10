@@ -29,3 +29,23 @@ li {
     white-space : nowrap;
     text-overflow : ellipsis;
 }
+.centre {
+    text-align: center ;
+}
+button {
+    font-size: 0.9em;
+    background-color: var(--vscode-button-background) ;
+    color: var(--vscode-button-foreground) ;
+    border-style: none ;
+    border-radius: 0.3em ;
+    padding: 0.2em 0.5em ;
+    border: 1px solid var(--vscode-focusBorder, transparant) ;
+}
+button:hover {
+    background-color: var(--vscode-button-hoverBackground) ;
+}
+button:focus {
+    background-color: var(--vscode-button-hoverBackground) ;
+    outline-color: var(--vscode-focusBorder) ;
+    outline-offset: 2px ;
+}

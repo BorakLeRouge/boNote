@@ -13,12 +13,6 @@ function activate(context) {
 		vscode.window.registerWebviewViewProvider('boNoteView', provider)
     );
 
-	context.subscriptions.push(
-		vscode.commands.registerCommand('bonote.choixDossier', function () {
-			vscode.window.showInformationMessage('Hello World from boNote!');
-		})
-	);
-
 }
 
 // This method is called when your extension is deactivated
