@@ -2,7 +2,7 @@
   "name": "bonote",
   "displayName": "boNote",
   "description": "Edition de Notes",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "publisher": "borakLeRouge",
   "icon": "icone.png",
   "engines": {
