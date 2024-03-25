@@ -23,6 +23,11 @@ function activate(context) {
         provider.creationFichier() ;
     }));
 
+    context.subscriptions.push(
+      vscode.commands.registerCommand('bonote.ouvrirDossier', async function () {
+        provider.ouvrirDossierVsCode() ;
+    }));
+    
 }
 
 // This method is called when your extension is deactivated

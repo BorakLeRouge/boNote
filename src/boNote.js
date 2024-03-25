@@ -65,12 +65,15 @@ const boNote = function(context) {
 
         creationFichier() {
             if (this._view != undefined) {
-                clog('coucou 1') ;
                 creationFile(context, this._view.webview) ;
-                clog('coucou 2') ;
             }
         }
         
+        ouvrirDossierVsCode() {
+            if (this._view != undefined) {
+                ouvrirDossier(context, this._view.webview) ;
+            }
+        }
     }
     ZeWebViewPanel.viewType = 'boNoteView';
  
@@ -112,7 +115,8 @@ async function PreparationAffichage(context, webview, dossierInit = '') {
                 prec = deb ;
                 let dispName = lignFich.replace('.txt', '').replace('.text', '').replace('.md', '').replace('.css', '').replace('.html', '').replace('.js', '') ;
                 dispName = dispName.replace('.png','').replace('.gif','').replace('.jpg','') ;
-                html += '<li><a class="link" href="javascript:void(0)" onclick="ouvrirFichier(\''+lignFich+'\')" title="'+lignFich+'">' + dispName + '</a></li>' ;
+                let vscodeContextData = '' // pour plus tard : " data-vscode-context='{\"webviewSection\": \"notelien\", \"preventDefaultContextMenuItems\": true}'" ;
+                html += '<li><a class="link" href="javascript:void(0)" onclick="ouvrirFichier(\''+lignFich+'\')" title="'+lignFich+'" '+vscodeContextData+' >' + dispName + '</a></li>' ;
             }
             html += '</ul>'
             webview.postMessage({

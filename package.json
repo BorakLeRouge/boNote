@@ -2,7 +2,7 @@
   "name": "bonote",
   "displayName": "boNote",
   "description": "Edition de Notes",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "publisher": "borakLeRouge",
   "icon": "icone.png",
   "repository": {
@@ -40,8 +40,13 @@
       "view/title": [
         {
           "command": "bonote.creationFichier" ,
-          "when": "view == boNoteView" ,
-          "group": "bonote@1"
+          "when":    "view == 'boNoteView'" ,
+          "group":   "bonote@1"
+        } ,
+        {
+          "command": "bonote.ouvrirDossier" ,
+          "when":    "view == 'boNoteView'" ,
+          "group":   "bonote@2"
         }
       ] 
     },
@@ -53,6 +58,11 @@
     {
       "command": "bonote.creationFichier",
       "title": "Création d'un fichier...",
+      "category": "boNote"
+    },
+    {
+      "command": "bonote.ouvrirDossier",
+      "title": "Ouvrir le dossier dans un espace VsCode...",
       "category": "boNote"
     }],
 		"configuration": {
