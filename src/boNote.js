@@ -50,22 +50,27 @@ const boNote = function(context) {
             });
         }
         _getHtmlForWebview(webview) {
-            let fichHTML = path.join(context.extensionPath, 'boNote.html') ;
+            let fichHTML = path.join(context.extensionPath, 'src', 'boNote.html') ;
             let contenuHTML = fs.readFileSync(fichHTML).toString() ;
-            const CHEMIN = webview.asWebviewUri(vscode.Uri.file(context.extensionPath)) ;
+            const CHEMIN = webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath, 'src'))) ;
             contenuHTML = contenuHTML.replaceAll('<chemin/>', CHEMIN) ;  
             return contenuHTML;
         }
+        
+        setFolder() {
+            clog('coucou 2') ;
+        }
+
+        getWebview() {
+            return this._view ;
+        }
+        
     }
     ZeWebViewPanel.viewType = 'boNoteView';
  
     const lePanel = new ZeWebViewPanel(context.extensionUri, context.extensionPath);
- 
-    return lePanel ;
-}
 
-module.exports = {
-	boNote
+    return lePanel ;
 }
 
 
@@ -146,7 +151,7 @@ async function ouvrirFichier(context, webview, fichier) {
 
 async function ouvrirDossier(context, webview) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
-    let leFich    = path.join(leDossier) ;
+    let leFich    = path.join(leDossier, 'src') ;
     if (leDossier != undefined && leDossier.trim() != '' && fs.existsSync(leFich)) {
         let uri = vscode.Uri.file(leFich) ;
         vscode.commands.executeCommand('vscode.openFolder', uri, {forceNewWindow: true}) ;
@@ -181,6 +186,11 @@ async function choisirDossier(context, webview) {
 }
 
 
+
+
+module.exports = {
+	boNote
+}
 
 // =======================================================
 //  RRRR    OOO   U   U  TTTTT  III  N   N  EEEEE   SSS

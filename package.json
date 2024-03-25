@@ -2,7 +2,7 @@
   "name": "bonote",
   "displayName": "boNote",
   "description": "Edition de Notes",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "publisher": "borakLeRouge",
   "icon": "icone.png",
   "repository": {
@@ -16,14 +16,14 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./extension.js",
+  "main": "./src/extension.js",
   "contributes": {
     "viewsContainers": {
       "activitybar": [
         {
           "id":    "panelNote",
           "title": "Bo-Note",
-          "icon":  "boNote.png"
+          "icon":  "src/boNote.png"
         }
       ]
     },
@@ -33,6 +33,22 @@
           "type": "webview",
           "id":   "boNoteView",
           "name": ""
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "bonote.nouveaufichier" ,
+          "when": "view == boNoteView" ,
+          "group": "bonote@1"
+        }
+      ] ,
+      "view/item/context": [
+        {
+          "command": "bonote.nouveaufichier" ,
+          "when": "view == boNoteView" ,
+          "group": "bonote@1"
         }
       ]
     },
