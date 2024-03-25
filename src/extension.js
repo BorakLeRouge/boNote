@@ -14,15 +14,13 @@ function activate(context) {
     );
 
     context.subscriptions.push(
-      vscode.commands.registerCommand('bonote.nouveaufichier', async function () {
-        clog('test1') ;
+      vscode.commands.registerCommand('bonote.choixDossier', async function () {
         provider.setFolder() ;
     }));
 
     context.subscriptions.push(
-      vscode.commands.registerCommand('bonote.nouveaufichier', async function () {
-        clog('test1') ;
-        provider.setFolder() ;
+      vscode.commands.registerCommand('bonote.creationFichier', async function () {
+        provider.creationFichier() ;
     }));
 
 }

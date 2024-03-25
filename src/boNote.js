@@ -31,7 +31,7 @@ const boNote = function(context) {
             };
             webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
             webviewView.webview.onDidReceiveMessage(msg => {
-                clog('Message ' + msg.action, msg)
+                //clog('Message ' + msg.action, msg)
                 if(msg.action == '1er Affichage') {
                     PreparationAffichage(context, webviewView.webview) ;
                 }
@@ -58,11 +58,17 @@ const boNote = function(context) {
         }
         
         setFolder() {
-            clog('coucou 2') ;
+            if (this._view != undefined) {
+                choisirDossier(context, this._view.webview) ;
+            }
         }
 
-        getWebview() {
-            return this._view ;
+        creationFichier() {
+            if (this._view != undefined) {
+                clog('coucou 1') ;
+                creationFile(context, this._view.webview) ;
+                clog('coucou 2') ;
+            }
         }
         
     }
@@ -151,7 +157,7 @@ async function ouvrirFichier(context, webview, fichier) {
 
 async function ouvrirDossier(context, webview) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
-    let leFich    = path.join(leDossier, 'src') ;
+    let leFich    = path.join(leDossier) ;
     if (leDossier != undefined && leDossier.trim() != '' && fs.existsSync(leFich)) {
         let uri = vscode.Uri.file(leFich) ;
         vscode.commands.executeCommand('vscode.openFolder', uri, {forceNewWindow: true}) ;
@@ -161,14 +167,14 @@ async function ouvrirDossier(context, webview) {
 }
 
 async function choisirDossier(context, webview) {
-
+    // Option d'ouverture
     const OpenDialogOptions = {
         canSelectMany: false,
         openLabel: 'Choisir Dossier',
         canSelectFiles: false,
         canSelectFolders: true
     };
-   
+    // Ouverture de dossier
     vscode.window.showOpenDialog(OpenDialogOptions).then(fileUri => {
         if (fileUri && fileUri[0]) {
             let leDossier = fileUri[0].fsPath ;
@@ -182,8 +188,31 @@ async function choisirDossier(context, webview) {
             vscode.window.showInformationMessage('Pas de dossier selectionné !') ;
         }
     });
-
 }
+
+async function creationFile(context, webview) {
+    // Dossier de base
+    let dossierDep = vscode.workspace.getConfiguration('boNote').get('boNoteFolder') ;
+    // Option de création
+    const OpenDialogOptions = {
+        saveLabel: 'Nouveau fichier',
+        title: 'Création dun nouveau fichier',
+        defaultUri: vscode.Uri.file(dossierDep) 
+    };
+    // Dialogue de création
+    vscode.window.showSaveDialog(OpenDialogOptions).then(fileUri => {
+        if (fileUri) {
+            let leFich = fileUri.fsPath ;
+            // Création d'un fichier vide
+            fs.writeFileSync(leFich, '', 'utf8') ; 
+            // Réaffichage
+            PreparationAffichage(context, webview, '') ;
+        } else {
+            vscode.window.showInformationMessage('Pas de fichier selectionné !') ;
+        }
+    })
+}
+
 
 
 

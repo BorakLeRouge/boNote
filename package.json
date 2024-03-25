@@ -39,22 +39,21 @@
     "menus": {
       "view/title": [
         {
-          "command": "bonote.nouveaufichier" ,
+          "command": "bonote.creationFichier" ,
           "when": "view == boNoteView" ,
           "group": "bonote@1"
         }
-      ] ,
-      "view/item/context": [
-        {
-          "command": "bonote.nouveaufichier" ,
-          "when": "view == boNoteView" ,
-          "group": "bonote@1"
-        }
-      ]
+      ] 
     },
     "commands": [{
       "command": "bonote.choixDossier",
-      "title": "choix du dosser de stockage des notes..."
+      "title": "choix du dosser de stockage des notes...",
+      "category": "boNote"
+    },
+    {
+      "command": "bonote.creationFichier",
+      "title": "Création d'un fichier...",
+      "category": "boNote"
     }],
 		"configuration": {
 			"title": "boNote",
