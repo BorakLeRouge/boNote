@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.2.0] Avril 2024
+
+- Ajout des boutons pour créer, renommer ou supprimer des fichiers.
+
 ## [1.0.0] Mars 2024
 
 - Version finale

@@ -61,6 +61,26 @@ function ouvrirFichier(fich) {
         contenu: fich      
     })
 }
+// * * * Renommer Fichier
+function renommer(fich) {
+    vscode.postMessage({
+        action: 'renommerFichier',
+        contenu: fich      
+    })
+}
+// * * * Supprimer Fichier
+function supprimer(fich) {
+    vscode.postMessage({
+        action: 'supprimerFichier',
+        contenu: fich      
+    })
+}
+// * * * Création Fichier
+function creation() {
+    vscode.postMessage({
+        action: 'creationFichier'
+    })
+}
 // * * * Ouvrir Dossier
 function ouvrirDossier() {
     vscode.postMessage({
