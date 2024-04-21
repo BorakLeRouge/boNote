@@ -75,6 +75,12 @@ function supprimer(fich) {
         contenu: fich      
     })
 }
+// * * * Création Fichier
+function creation() {
+    vscode.postMessage({
+        action: 'creationFichier'
+    })
+}
 // * * * Ouvrir Dossier
 function ouvrirDossier() {
     vscode.postMessage({

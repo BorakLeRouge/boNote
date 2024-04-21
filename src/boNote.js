@@ -53,6 +53,9 @@ const boNote = function(context) {
                 if(msg.action == 'actualiser') {
                     PreparationAffichage(context, webviewView.webview) ;
                 }
+                if(msg.action == 'creationFichier') {
+                    creationFile(context, webviewView.webview) ;
+                }
             });
         }
         _getHtmlForWebview(webview) {
@@ -239,14 +242,16 @@ async function choisirDossier(context, webview) {
 
 async function creationFile(context, webview) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
-    let nouveauNom = await vscode.window.showInputBox({ placeHolder: 'Nouveau Nom ?', prompt: 'Nouveau Nom ?'});
-    nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
-    if (nouveauNom != '') {
-        let leFich = path.join(leDossier, nouveauNom) ;
-        // Création d'un fichier vide
-        fs.writeFileSync(leFich, '', 'utf8') ; 
-        // Réaffichage
-        PreparationAffichage(context, webview, '') ;
+    let nouveauNom = await vscode.window.showInputBox({ placeHolder: 'Nom du nouveau Fichier ?', prompt: 'Nom du nouveau Fichier ?'});
+    if (nouveauNom != undefined) {
+        nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
+        if (nouveauNom != '') {
+            let leFich = path.join(leDossier, nouveauNom) ;
+            // Création d'un fichier vide
+            fs.writeFileSync(leFich, '', 'utf8') ; 
+            // Réaffichage
+            PreparationAffichage(context, webview, '') ;
+        }
     }
 }
 
