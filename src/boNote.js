@@ -35,6 +35,12 @@ const boNote = function(context) {
                 if(msg.action == '1er Affichage') {
                     PreparationAffichage(context, webviewView.webview) ;
                 }
+                if(msg.action == 'renommerFichier') {
+                    renommerFichier(context, webviewView.webview, msg.contenu) ;
+                }
+                if(msg.action == 'supprimerFichier') {
+                    supprimerFichier(context, webviewView.webview, msg.contenu) ;
+                }
                 if(msg.action == 'ouvrirFichier') {
                     ouvrirFichier(context, webviewView.webview, msg.contenu) ;
                 }
@@ -116,7 +122,11 @@ async function PreparationAffichage(context, webview, dossierInit = '') {
                 let dispName = lignFich.replace('.txt', '').replace('.text', '').replace('.md', '').replace('.css', '').replace('.html', '').replace('.js', '') ;
                 dispName = dispName.replace('.png','').replace('.gif','').replace('.jpg','') ;
                 let vscodeContextData = '' // pour plus tard : " data-vscode-context='{\"webviewSection\": \"notelien\", \"preventDefaultContextMenuItems\": true}'" ;
-                html += '<li><a class="link" href="javascript:void(0)" onclick="ouvrirFichier(\''+lignFich+'\')" title="'+lignFich+'" '+vscodeContextData+' >' + dispName + '</a></li>' ;
+                html += '<li><a class="link" href="javascript:void(0)" onclick="ouvrirFichier(\''+lignFich+'\')" title="'+lignFich+'" '+vscodeContextData+' >' + dispName + '</a>' ; 
+                html += '<span class="blocDroite">' ;
+                html += '<button class="miniBut" title="Renommer" onclick="renommer(\''+lignFich+'\')">Rn</button>' ;
+                html += '<button class="miniBut" title="Supprimer" onclick="supprimer(\''+lignFich+'\')">-</button>' ;
+                html += '</li></span>' ;
             }
             html += '</ul>'
             webview.postMessage({
@@ -159,6 +169,39 @@ async function ouvrirFichier(context, webview, fichier) {
     }
 }
 
+async function renommerFichier(context, webview, fichier) {
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    let nouveauNom = await vscode.window.showInputBox({ placeHolder: 'Nouveau Nom ?', prompt: 'Nouveau Nom ?', value: fichier });
+    nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
+    clog('rename : ' + nouveauNom + " *** "+fichier)
+    if (nouveauNom != fichier || nouveauNom != '') {
+        oldName = path.join(leDossier, fichier) ;
+        newName = path.join(leDossier, nouveauNom) ;
+        // Renommage
+        fs.renameSync(oldName, newName) ;
+        // Réaffichage
+        PreparationAffichage(context, webview, '') ;
+    }
+}
+
+async function supprimerFichier(context, webview, fichier) {
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    let leFich    = path.join(leDossier, fichier) ;
+    // * * On confirme
+    let result = await vscode.window.showQuickPick([
+            { label: "Ne rien faire", value: false },
+            { label: "Supprimer le fichier", value: true }
+        ],
+        {title: 'Confirmer votre choix :'}
+    );
+    if (result.value) {
+        // Delete
+        fs.unlinkSync(leFich) ;
+        // Réaffichage
+        PreparationAffichage(context, webview, '') ;
+    }
+}
+
 async function ouvrirDossier(context, webview) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
     let leFich    = path.join(leDossier) ;
@@ -195,26 +238,16 @@ async function choisirDossier(context, webview) {
 }
 
 async function creationFile(context, webview) {
-    // Dossier de base
-    let dossierDep = vscode.workspace.getConfiguration('boNote').get('boNoteFolder') ;
-    // Option de création
-    const OpenDialogOptions = {
-        saveLabel: 'Nouveau fichier',
-        title: 'Création dun nouveau fichier',
-        defaultUri: vscode.Uri.file(dossierDep) 
-    };
-    // Dialogue de création
-    vscode.window.showSaveDialog(OpenDialogOptions).then(fileUri => {
-        if (fileUri) {
-            let leFich = fileUri.fsPath ;
-            // Création d'un fichier vide
-            fs.writeFileSync(leFich, '', 'utf8') ; 
-            // Réaffichage
-            PreparationAffichage(context, webview, '') ;
-        } else {
-            vscode.window.showInformationMessage('Pas de fichier selectionné !') ;
-        }
-    })
+    let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
+    let nouveauNom = await vscode.window.showInputBox({ placeHolder: 'Nouveau Nom ?', prompt: 'Nouveau Nom ?'});
+    nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
+    if (nouveauNom != '') {
+        let leFich = path.join(leDossier, nouveauNom) ;
+        // Création d'un fichier vide
+        fs.writeFileSync(leFich, '', 'utf8') ; 
+        // Réaffichage
+        PreparationAffichage(context, webview, '') ;
+    }
 }
 
 

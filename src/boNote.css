@@ -25,7 +25,8 @@ ul {
     overflow: hidden ;
 }
 li {
-    margin-right: 0.2em ;
+    position: relative ;
+    margin: 0.1em 0.2em ;
     white-space : nowrap;
     text-overflow : ellipsis;
 }
@@ -48,4 +49,15 @@ button:focus {
     background-color: var(--vscode-button-hoverBackground) ;
     outline-color: var(--vscode-focusBorder) ;
     outline-offset: 2px ;
+}
+span.blocDroite {
+    display: inline-block ;
+    position: absolute ;
+    top: -0.1em ;
+    right: 0.2em ;
+}
+button.miniBut {
+    font-size: 0.70em;
+    padding: 0.1em 0.2em ;
+    margin: 0.1em 0.1em ;
 }
