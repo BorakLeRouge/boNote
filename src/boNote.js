@@ -198,7 +198,7 @@ async function supprimerFichier(context, webview, fichier) {
         ],
         {title: 'Confirmer votre choix :'}
     );
-    if (result.value) {
+    if (result != undefined && result.value) {
         // Delete
         fs.unlinkSync(leFich) ;
         // Réaffichage
