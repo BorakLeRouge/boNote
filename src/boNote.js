@@ -175,15 +175,16 @@ async function ouvrirFichier(context, webview, fichier) {
 async function renommerFichier(context, webview, fichier) {
     let leDossier = vscode.workspace.getConfiguration('boNote').boNoteFolder ;
     let nouveauNom = await vscode.window.showInputBox({ placeHolder: 'Nouveau Nom ?', prompt: 'Nouveau Nom ?', value: fichier });
-    nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
-    clog('rename : ' + nouveauNom + " *** "+fichier)
-    if (nouveauNom != fichier || nouveauNom != '') {
-        oldName = path.join(leDossier, fichier) ;
-        newName = path.join(leDossier, nouveauNom) ;
-        // Renommage
-        fs.renameSync(oldName, newName) ;
-        // Réaffichage
-        PreparationAffichage(context, webview, '') ;
+    if (nouveauNom != undefined) {
+        nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
+        if (nouveauNom != fichier || nouveauNom != '') {
+            oldName = path.join(leDossier, fichier) ;
+            newName = path.join(leDossier, nouveauNom) ;
+            // Renommage
+            fs.renameSync(oldName, newName) ;
+            // Réaffichage
+            PreparationAffichage(context, webview, '') ;
+        }
     }
 }
 
