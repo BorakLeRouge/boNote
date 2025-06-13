@@ -166,7 +166,12 @@ async function ouvrirFichier(context, webview, fichier) {
     let leFich    = path.join(leDossier, fichier) ;
     if (fs.existsSync(leFich)) {
         let uri = vscode.Uri.file(leFich) ;
-        vscode.commands.executeCommand('vscode.open', uri) ;
+        let ext = path.extname(leFich).toLowerCase() ;
+        if (['.txt', '.text', '.cbl', '.cobol', '.cob', '.md', '.js', '.rexx', '.css', '.html', '.yaml', '.sql', '.jcl'].includes(ext)) {
+            vscode.window.showTextDocument(uri, { preview: true }) ;
+        } else {
+            vscode.commands.executeCommand('vscode.open', uri) ;
+        }
     } else {
         vscode.window.showErrorMessage("Le fichier n'est plus présent") ;
     }
@@ -178,8 +183,8 @@ async function renommerFichier(context, webview, fichier) {
     if (nouveauNom != undefined) {
         nouveauNom = nouveauNom.replaceAll('/', '-').replaceAll('\\', '-').replaceAll(':', '-') ;
         if (nouveauNom != fichier || nouveauNom != '') {
-            oldName = path.join(leDossier, fichier) ;
-            newName = path.join(leDossier, nouveauNom) ;
+            let oldName = path.join(leDossier, fichier) ;
+            let newName = path.join(leDossier, nouveauNom) ;
             // Renommage
             fs.renameSync(oldName, newName) ;
             // Réaffichage
@@ -229,7 +234,7 @@ async function choisirDossier(context, webview) {
     vscode.window.showOpenDialog(OpenDialogOptions).then(fileUri => {
         if (fileUri && fileUri[0]) {
             let leDossier = fileUri[0].fsPath ;
-            console.log('Selected file: ' + fileUri[0].fsPath);
+            //console.log('Selected file: ' + fileUri[0].fsPath);
             if (fs.existsSync(leDossier)) {
                 // Dossier sélectionné
                 vscode.workspace.getConfiguration('boNote').update('boNoteFolder', leDossier, true) ;
